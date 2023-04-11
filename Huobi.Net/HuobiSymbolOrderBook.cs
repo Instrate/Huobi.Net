@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Huobi.Net.Objects;
-using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.OrderBook;
-using CryptoExchange.Net.Sockets;
+using CryptoExchange39.Net.Objects;
+using CryptoExchange39.Net.OrderBook;
+using CryptoExchange39.Net.Sockets;
 using Huobi.Net.Interfaces;
 
 namespace Huobi.Net

@@ -1,5 +1,5 @@
 ﻿using System;
-using CryptoExchange.Net.ExchangeInterfaces;
+using CryptoExchange39.Net.ExchangeInterfaces;
 using Huobi.Net.Converters;
 using Newtonsoft.Json;
 

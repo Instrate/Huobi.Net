@@ -1,8 +1,8 @@
-﻿using CryptoExchange.Net;
-using CryptoExchange.Net.Authentication;
-using CryptoExchange.Net.Converters;
-using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Objects;
+﻿using CryptoExchange39.Net;
+using CryptoExchange39.Net.Authentication;
+using CryptoExchange39.Net.Converters;
+using CryptoExchange39.Net.Interfaces;
+using CryptoExchange39.Net.Objects;
 using Huobi.Net.Converters;
 using Huobi.Net.Objects;
 using Newtonsoft.Json;
@@ -13,11 +13,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using CryptoExchange.Net.ExchangeInterfaces;
+using CryptoExchange39.Net.ExchangeInterfaces;
 using Huobi.Net.Enums;
 using Huobi.Net.Interfaces;
 using Newtonsoft.Json.Linq;
-using Huobi.Net.Enums;
 
 namespace Huobi.Net
 {
@@ -71,6 +70,15 @@ namespace Huobi.Net
         private const string QueryDepositAddressEndpoint = "account/deposit/address";
         private const string PlaceWithdrawEndpoint = "dw/withdraw/api/create";
         private const string QueryWithdrawDepositEndpoint = "query/deposit-withdraw";
+        // Swap version
+        private const string UsdtSwapPlaceOrderEndpoint = "linear-swap-api/v1/swap_cross_order";
+        private const string UsdtSwapMarketDataEndpoint = "linear-swap-ex/market/detail/merged?contract_code={}";
+        private const string UsdtSwapOrderInfoEndpoint = "linear-swap-api/v1/swap_cross_order_info";
+        private const string UsdtSwapOrderCancelEndpoint = "/linear-swap-api/v1/swap_cross_cancel";
+        private const string UsdtSwapContractInfoEndpoint = "linear-swap-api/v1/swap_contract_info";
+        private const string UsdtSwapClosePositionEndpoint = "linear-swap-api/v1/swap_cross_lightning_close_position";
+        private const string UsdtSwapPositionInfoEndpoint = "linear-swap-api/v1/swap_cross_position_info";
+        private const string UsdtSwapAccountInfoEndpoint = "linear-swap-api/v1/swap_cross_account_info";
 
         /// <summary>
         /// Whether public requests should be signed if ApiCredentials are provided. Needed for accurate rate limiting.
@@ -93,6 +101,19 @@ namespace Huobi.Net
         {
             SignPublicRequests = options.SignPublicRequests;
             manualParseError = true;
+        }
+
+        /// <summary>
+        /// Based on keys
+        /// </summary>
+        /// <param name="apiKey"></param>
+        /// <param name="apiSecret"></param>
+        public HuobiClient(string apiKey, string apiSecret) :this(new HuobiClientOptions
+        {
+            ApiCredentials = new ApiCredentials(apiKey, apiSecret)
+        })
+        {
+
         }
         #endregion
 
@@ -1155,6 +1176,280 @@ namespace Huobi.Net
         ///<inheritdoc cref="GetWithdrawDepositAsync"/>
         public WebCallResult<IEnumerable<WithdrawDeposit>> GetWithdrawDeposit(WithdrawDepositType type, string? currency = null, int? from = null, int? size = null, HuobiFilterDirection? direction = null, CancellationToken ct = default) => GetWithdrawDepositAsync(type, currency, from, size, direction, ct).Result;
 
+        /// <summary>
+        /// Get swap order info async
+        /// </summary>
+        /// <param name="orderId">order id</param>
+        /// <param name="contract_code">contract code</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public async Task<WebCallResult<List<UsdtSwapOrderInfo>>> UsdtSwapGetOrderInfoAsync(string orderId, string contract_code, CancellationToken ct = default)
+        {
+            var parameters = new Dictionary<string, object>()
+            {
+                { "order_id", orderId },
+                { "contract_code", contract_code }
+            };
+
+            return await SendUsdtSwapRequest<List<UsdtSwapOrderInfo>>(GetUrl(UsdtSwapOrderInfoEndpoint), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get swap order info sync
+        /// </summary>
+        /// <param name="orderId">order id</param>
+        /// <param name="contract_code"> contract code</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public WebCallResult<List<UsdtSwapOrderInfo>> UsdtSwapGetOrderInfo(string orderId, string contract_code, CancellationToken ct = default)
+        {
+            return UsdtSwapGetOrderInfoAsync(orderId, contract_code, ct).Result;
+        }
+
+        /// <summary>
+        /// Gets position info async
+        /// </summary>
+        /// <param name="contract_code">contract code</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public async Task<WebCallResult<List<UsdtSwapPositionInfo>>> UsdtSwapGetPositionInfoAsync(string contract_code, CancellationToken ct = default)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "contract_code", contract_code }
+            };
+
+            return await SendUsdtSwapRequest<List<UsdtSwapPositionInfo>>(GetUrl(UsdtSwapPositionInfoEndpoint), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets position info sync
+        /// </summary>
+        /// <param name="contract_code">contract code</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public WebCallResult<List<UsdtSwapPositionInfo>> UsdtSwapGetPositionInfo(string contract_code, CancellationToken ct = default)
+        {
+            return UsdtSwapGetPositionInfoAsync(contract_code, ct).Result;
+        }
+
+        /// <summary>
+        /// Get Usdt-M Account info async
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public async Task<WebCallResult<List<UsdtSwapAccountInfo>>> UsdtSwapGetAccountInfoAsync(CancellationToken ct = default)
+        {
+            var parameters = new Dictionary<string, object>();
+
+            return await SendUsdtSwapRequest<List<UsdtSwapAccountInfo>>(GetUrl(UsdtSwapAccountInfoEndpoint), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Usdt-M Account info
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public WebCallResult<List<UsdtSwapAccountInfo>> UsdtSwapGetAccountInfo(CancellationToken ct = default)
+        {
+            return UsdtSwapGetAccountInfoAsync(ct).Result;
+        }
+
+        /// <summary>
+        /// Close current open position async
+        /// </summary>
+        /// <param name="contract_code">contract code</param>
+        /// <param name="direction">direction to close</param>
+        /// <param name="volume">volume to close</param>
+        /// <param name="channel_code">Broker channel_code</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public async Task<WebCallResult<UsdtSwapPlaceOrderDetail>> UsdtSwapClosePositionAsync(string contract_code,
+            EUsdtSwapOrderDirection direction, long volume, string? channel_code = null, CancellationToken ct = default)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "contract_code", contract_code },
+                { "direction", direction.ToString().ToLower() },
+                { "volume", volume }
+            };
+
+            if (channel_code != null)
+                parameters.Add("channel_code", channel_code);
+
+            return await SendUsdtSwapRequest<UsdtSwapPlaceOrderDetail>(GetUrl(UsdtSwapClosePositionEndpoint), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Close current open position sync
+        /// </summary>
+        /// <param name="contract_code">contract_code</param>
+        /// <param name="direction">direction to close</param>
+        /// <param name="volume">volume to close</param>
+        /// <param name="channel_code"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public WebCallResult<UsdtSwapPlaceOrderDetail> UsdtSwapClosePosition(string contract_code, 
+                EUsdtSwapOrderDirection direction, long volume, string? channel_code = null, CancellationToken ct = default)
+        {
+            return UsdtSwapClosePositionAsync(contract_code, direction, volume, channel_code, ct).Result;
+        }
+        /// <summary>
+        /// Place Usdt Swap Order Async
+        /// </summary>
+        /// <param name="contract_code"></param>
+        /// <param name="direction"></param>
+        /// <param name="offset"></param>
+        /// <param name="price_type"></param>
+        /// <param name="lever_rate"></param>
+        /// <param name="volume"></param>
+        /// <param name="price"></param>
+        /// <param name="channel_code">Broker channel code</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public async Task<WebCallResult<UsdtSwapPlaceOrderDetail>> UsdtSwapPlaceOrderAsync(string contract_code, 
+            EUsdtSwapOrderDirection direction, EUsdtSwapOrderOffset offset, EUsdtSwapOrderPriceType price_type, 
+            int lever_rate, long volume, decimal? price, string? channel_code = null, CancellationToken ct = default)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "contract_code", contract_code },
+                { "direction", direction.ToString().ToLower() },
+                { "volume", volume },
+                { "offset", offset.ToString().ToLower() },
+                { "lever_rate", lever_rate },
+                { "order_price_type", price_type.ToString().ToLower()}
+            };
+
+            if (channel_code != null)
+                parameters.Add("channel_code", channel_code);
+
+            parameters.AddOptionalParameter("price", price?.ToString());
+
+            return await SendUsdtSwapRequest<UsdtSwapPlaceOrderDetail>(GetUrl(UsdtSwapPlaceOrderEndpoint), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Place Usdt Swap Order Sync
+        /// </summary>
+        /// <param name="contract_code"></param>
+        /// <param name="direction"></param>
+        /// <param name="offset"></param>
+        /// <param name="price_type"></param>
+        /// <param name="lever_rate"></param>
+        /// <param name="volume"></param>
+        /// <param name="price"></param>
+        /// <param name="channel_code">Broker channel_code</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public WebCallResult<UsdtSwapPlaceOrderDetail> UsdtSwapPlaceOrder(string contract_code, 
+            EUsdtSwapOrderDirection direction, EUsdtSwapOrderOffset offset, EUsdtSwapOrderPriceType price_type, 
+            int lever_rate, long volume, decimal? price, string? channel_code = null, CancellationToken ct = default)
+        {
+            return UsdtSwapPlaceOrderAsync(contract_code, direction, offset, price_type, lever_rate, volume, price, channel_code, ct).Result;
+        }
+
+        /*
+            order_id	false(more see remarks)	string	order ID（different IDs are separated by ",", maximum 10 orders can be withdrew at one time）	
+            client_order_id	false(more see remarks)	string	Client order ID (different IDs are separated by ",", maximum 10 orders can be withdrew at one time)	
+            contract_code	false(more see remarks)	string	contract code	swap: "BTC-USDT"... , future: "BTC-USDT-210625" ...
+            pair	false(more see remarks)	string	pair	BTC-USDT
+            contract_type	false(more see remarks)	string	contract type	swap, this_week, next_week, quarter, next_quarter
+         */
+
+        /// <summary>
+        /// Place Usdt Swap Order Async
+        /// </summary>
+        /// <param name="order_id"></param>
+        /// <param name="contract_code"></param>
+        /// <param name="contract_type"></param>
+        /// <returns></returns>
+        public async Task<WebCallResult<UsdtSwapPlaceOrderDetail>> UsdtSwapCancelOrderAsync(string contract_code,
+            EUsdtSwapOrderDirection direction, EUsdtSwapOrderOffset offset, EUsdtSwapOrderPriceType price_type,
+            int lever_rate, long volume, decimal? price, string? channel_code = null, CancellationToken ct = default)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "contract_code", contract_code },
+                { "direction", direction.ToString().ToLower() },
+                { "volume", volume },
+                { "offset", offset.ToString().ToLower() },
+                { "lever_rate", lever_rate },
+                { "order_price_type", price_type.ToString().ToLower()}
+            };
+
+            if (channel_code != null)
+                parameters.Add("channel_code", channel_code);
+
+            parameters.AddOptionalParameter("price", price?.ToString());
+
+            return await SendUsdtSwapRequest<UsdtSwapPlaceOrderDetail>(GetUrl(UsdtSwapPlaceOrderEndpoint), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Place Usdt Swap Order Sync
+        /// </summary>
+        /// <param name="contract_code"></param>
+        /// <param name="direction"></param>
+        /// <param name="offset"></param>
+        /// <param name="price_type"></param>
+        /// <param name="lever_rate"></param>
+        /// <param name="volume"></param>
+        /// <param name="price"></param>
+        /// <param name="channel_code">Broker channel_code</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public WebCallResult<UsdtSwapPlaceOrderDetail> UsdtSwapCancelOrder(string contract_code,
+            EUsdtSwapOrderDirection direction, EUsdtSwapOrderOffset offset, EUsdtSwapOrderPriceType price_type,
+            int lever_rate, long volume, decimal? price, string? channel_code = null, CancellationToken ct = default)
+        {
+            return UsdtSwapCancelOrderAsync(contract_code, direction, offset, price_type, lever_rate, volume, price, channel_code, ct).Result;
+        }
+
+        /// <summary>
+        /// Get usdt swap contract info async
+        /// </summary>
+        /// <param name="contract_code">contract code</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public async Task<WebCallResult<List<UsdtSwapSwapInfo>>> UsdtSwapGetContractInfoAsync(string contract_code, CancellationToken ct = default)
+        {
+            var parameters = new Dictionary<string, object>()
+            {
+                { "contract_code", contract_code }
+            };
+
+            return await SendUsdtSwapRequest<List<UsdtSwapSwapInfo>>(GetUrl(UsdtSwapContractInfoEndpoint), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get usdt swap contract info sync
+        /// </summary>
+        /// <param name="contract_code">contract info</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public WebCallResult<List<UsdtSwapSwapInfo>> UsdtSwapGetContractInfo(string contract_code, CancellationToken ct = default)
+        {
+            return UsdtSwapGetContractInfoAsync(contract_code, ct).Result;
+        }
+
+        /// <summary>
+        /// Gets UsdtSwap contract info async version
+        /// </summary>
+        /// <param name="contract_code"> Contract code to get info</param>
+        /// <returns></returns>
+        public async Task<WebCallResult<UsdtSwapMarketData>> UsdtSwapGetMarketDataAsync(string contract_code, CancellationToken ct = default)
+        {
+            return await SendHuobiRequest<UsdtSwapMarketData>(GetUrl(FillPathParameter(UsdtSwapMarketDataEndpoint, contract_code.ToString(CultureInfo.InvariantCulture))), HttpMethod.Get, ct, signed: false).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets UsdtSwap contract info sync version
+        /// </summary>
+        /// <param name="contract_code"></param>
+        /// <returns></returns>
+        public WebCallResult<UsdtSwapMarketData> UsdtSwapGetmarketData(string contract_code)
+            => UsdtSwapGetMarketDataAsync(contract_code).Result;
 
 
         private async Task<WebCallResult<T>> SendHuobiV2Request<T>(Uri uri, HttpMethod method, CancellationToken cancellationToken, Dictionary<string, object>? parameters = null, bool signed = false, bool checkResult = true)
@@ -1193,6 +1488,17 @@ namespace Huobi.Net
             return new WebCallResult<T>(result.ResponseStatusCode, result.ResponseHeaders, result.Data.Data, null);
         }
 
+        private async Task<WebCallResult<T>> SendUsdtSwapRequest<T>(Uri uri, HttpMethod method, CancellationToken cancellationToken, Dictionary<string, object>? parameters = null, bool signed = false, bool checkResult = true)
+        {
+            var result = await SendRequest<HuobiResponseUsdtSwap<T>>(uri, method, cancellationToken, parameters, signed, checkResult).ConfigureAwait(false); 
+            if (!result || result.Data == null)
+                return new WebCallResult<T>(result.ResponseStatusCode, result.ResponseHeaders, default, result.Error);
+
+            if (result.Data.Status != "ok")
+                return new WebCallResult<T>(result.ResponseStatusCode, result.ResponseHeaders, default, new ServerError(result.Data.ErrorCode, result.Data.ErrorMessage));
+
+            return new WebCallResult<T>(result.ResponseStatusCode, result.ResponseHeaders, result.Data.Data, null);
+        }
         /// <inheritdoc />
         protected override IRequest ConstructRequest(Uri uri, HttpMethod method, Dictionary<string, object>? parameters, bool signed,
             PostParameters postParameterPosition, ArrayParametersSerialization arraySerialization, int requestId)
@@ -1235,6 +1541,28 @@ namespace Huobi.Net
             }
 
             return request;
+
+            // proxy1
+            //Proxy ALEX
+
+            headers.Add("Accept", Constants.JsonContentHeader);
+            headers.Add("Content-Type", Constants.JsonContentHeader);
+
+            JObject proxyContent = JObject.FromObject(new
+            {
+                url = request.Uri.ToString(),
+                request = request.Method.ToString().ToUpper(),
+                debug = false,
+                headers = headers,
+                @params = request.Content
+            });
+
+            uri = new Uri("http://23.111.108.167/proxy/proxy_2.php");
+            var request1 = RequestFactory.Create(HttpMethod.Post, uri.ToString(), requestId);
+            request1.SetContent(JsonConvert.SerializeObject(proxyContent), Constants.JsonContentHeader);
+            //request1.SetContent(requestBodyEmptyContent, Constants.JsonContentHeader);
+            //request1.Accept = Constants.JsonContentHeader.ToString();
+            return request1;
         }
 
         /// <inheritdoc />

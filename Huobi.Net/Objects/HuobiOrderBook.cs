@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using CryptoExchange.Net.ExchangeInterfaces;
-using CryptoExchange.Net.Interfaces;
+using CryptoExchange39.Net.ExchangeInterfaces;
+using CryptoExchange39.Net.Interfaces;
 using Newtonsoft.Json;
 
 namespace Huobi.Net.Objects

@@ -1,5 +1,5 @@
 ﻿using System.Net.Http;
-using CryptoExchange.Net.Objects;
+using CryptoExchange39.Net.Objects;
 using Huobi.Net.Interfaces;
 
 namespace Huobi.Net
@@ -17,7 +17,8 @@ namespace Huobi.Net
         /// <summary>
         /// Create new client options
         /// </summary>
-        public HuobiClientOptions() : this(null, "https://api.huobi.pro")
+        ///public HuobiClientOptions() : this(null, "https://api.huobi.pro")
+        public HuobiClientOptions() : this(null, "https://api.hbdm.com")
         {
         }
 
@@ -25,7 +26,8 @@ namespace Huobi.Net
         /// Create new client options
         /// </summary>
         /// <param name="client">HttpClient to use for requests from this client</param>
-        public HuobiClientOptions(HttpClient client) : this(client, "https://api.huobi.pro")
+        ///public HuobiClientOptions(HttpClient client) : this(client, "https://api.huobi.pro")
+        public HuobiClientOptions(HttpClient client) : this(client, "https://api.hbdm.com")
         {
         }
 

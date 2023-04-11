@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using CryptoExchange.Net;
+using CryptoExchange39.Net;
 using Huobi.Net.Objects;
 using Huobi.Net.Objects.SocketObjects;
 using Huobi.Net.Objects.SocketObjects.V2;

@@ -114,6 +114,121 @@
             c2c margin api
             </summary>
         </member>
+        <member name="T:Huobi.Net.Enums.EUsdtSwapOrderDirection">
+            <summary>
+            Used to 
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderDirection.Buy">
+            <summary>
+            Long direction
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderDirection.Sell">
+            <summary>
+            Short direction
+            </summary>
+        </member>
+        <member name="T:Huobi.Net.Enums.EUsdtSwapOrderOffset">
+            <summary>
+            Offset direction
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderOffset.Open">
+            <summary>
+            Increase position
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderOffset.Close">
+            <summary>
+            Decrease position
+            </summary>
+        </member>
+        <member name="T:Huobi.Net.Enums.EUsdtSwapOrderPriceType">
+            <summary>
+            Shows the type of swap 
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Limit">
+            <summary>
+            Limit Order
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Opponent">
+            <summary>
+            BBO
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Post_only">
+            <summary>
+            Post-Only Order, No order limit but position limit for post-only orders
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Optimal_5">
+            <summary>
+            Optimal 5
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Optimal_10">
+            <summary>
+            Optimal 10
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Optimal_20">
+            <summary>
+            Optimal 20
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Ioc">
+            <summary>
+            IOC Order
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Fok">
+            <summary>
+            FOK Order
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Opponent_ioc">
+            <summary>
+            IOC order using the BBO price
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Optimal_5_ioc">
+            <summary>
+            optimal_5 IOC
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Optimal_10_ioc">
+            <summary>
+            optimal_10 IOC
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Optimal_20_ioc">
+            <summary>
+            optimal_20 IOC
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Opponent_fok">
+            <summary>
+            FOK order using the BBO price
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Optimal_5_fok">
+            <summary>
+            optimal_5 FOK
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Optimal_10_fok">
+            <summary>
+            optimal_10 FOK
+            </summary>
+        </member>
+        <member name="F:Huobi.Net.Enums.EUsdtSwapOrderPriceType.Optimal_20_fok">
+            <summary>
+            optimal_20 FOK
+            </summary>
+        </member>
         <member name="T:Huobi.Net.Enums.WithdrawDepositState">
             <summary>
             The state of a transfer 
@@ -238,6 +353,13 @@
             <summary>
             Create a new instance of the HuobiClient with the provided options
             </summary>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.#ctor(System.String,System.String)">
+            <summary>
+            Based on keys
+            </summary>
+            <param name="apiKey"></param>
+            <param name="apiSecret"></param>
         </member>
         <member name="M:Huobi.Net.HuobiClient.SetDefaultOptions(Huobi.Net.HuobiClientOptions)">
             <summary>
@@ -935,7 +1057,161 @@
         <member name="M:Huobi.Net.HuobiClient.GetWithdrawDeposit(Huobi.Net.Enums.WithdrawDepositType,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{Huobi.Net.Objects.HuobiFilterDirection},System.Threading.CancellationToken)">
             <inheritdoc cref="M:Huobi.Net.HuobiClient.GetWithdrawDepositAsync(Huobi.Net.Enums.WithdrawDepositType,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{Huobi.Net.Objects.HuobiFilterDirection},System.Threading.CancellationToken)"/>
         </member>
-        <member name="M:Huobi.Net.HuobiClient.ConstructRequest(System.Uri,System.Net.Http.HttpMethod,System.Collections.Generic.Dictionary{System.String,System.Object},System.Boolean,CryptoExchange.Net.Objects.PostParameters,CryptoExchange.Net.Objects.ArrayParametersSerialization,System.Int32)">
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapGetOrderInfoAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get swap order info async
+            </summary>
+            <param name="orderId">order id</param>
+            <param name="contract_code">contract code</param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapGetOrderInfo(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get swap order info sync
+            </summary>
+            <param name="orderId">order id</param>
+            <param name="contract_code"> contract code</param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapGetPositionInfoAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets position info async
+            </summary>
+            <param name="contract_code">contract code</param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapGetPositionInfo(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets position info sync
+            </summary>
+            <param name="contract_code">contract code</param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapGetAccountInfoAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get Usdt-M Account info async
+            </summary>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapGetAccountInfo(System.Threading.CancellationToken)">
+            <summary>
+            Get Usdt-M Account info
+            </summary>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapClosePositionAsync(System.String,Huobi.Net.Enums.EUsdtSwapOrderDirection,System.Int64,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Close current open position async
+            </summary>
+            <param name="contract_code">contract code</param>
+            <param name="direction">direction to close</param>
+            <param name="volume">volume to close</param>
+            <param name="channel_code">Broker channel_code</param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapClosePosition(System.String,Huobi.Net.Enums.EUsdtSwapOrderDirection,System.Int64,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Close current open position sync
+            </summary>
+            <param name="contract_code">contract_code</param>
+            <param name="direction">direction to close</param>
+            <param name="volume">volume to close</param>
+            <param name="channel_code"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapPlaceOrderAsync(System.String,Huobi.Net.Enums.EUsdtSwapOrderDirection,Huobi.Net.Enums.EUsdtSwapOrderOffset,Huobi.Net.Enums.EUsdtSwapOrderPriceType,System.Int32,System.Int64,System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Place Usdt Swap Order Async
+            </summary>
+            <param name="contract_code"></param>
+            <param name="direction"></param>
+            <param name="offset"></param>
+            <param name="price_type"></param>
+            <param name="lever_rate"></param>
+            <param name="volume"></param>
+            <param name="price"></param>
+            <param name="channel_code">Broker channel code</param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapPlaceOrder(System.String,Huobi.Net.Enums.EUsdtSwapOrderDirection,Huobi.Net.Enums.EUsdtSwapOrderOffset,Huobi.Net.Enums.EUsdtSwapOrderPriceType,System.Int32,System.Int64,System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Place Usdt Swap Order Sync
+            </summary>
+            <param name="contract_code"></param>
+            <param name="direction"></param>
+            <param name="offset"></param>
+            <param name="price_type"></param>
+            <param name="lever_rate"></param>
+            <param name="volume"></param>
+            <param name="price"></param>
+            <param name="channel_code">Broker channel_code</param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapCancelOrderAsync(System.String,Huobi.Net.Enums.EUsdtSwapOrderDirection,Huobi.Net.Enums.EUsdtSwapOrderOffset,Huobi.Net.Enums.EUsdtSwapOrderPriceType,System.Int32,System.Int64,System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Place Usdt Swap Order Async
+            </summary>
+            <param name="order_id"></param>
+            <param name="contract_code"></param>
+            <param name="contract_type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapCancelOrder(System.String,Huobi.Net.Enums.EUsdtSwapOrderDirection,Huobi.Net.Enums.EUsdtSwapOrderOffset,Huobi.Net.Enums.EUsdtSwapOrderPriceType,System.Int32,System.Int64,System.Nullable{System.Decimal},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Place Usdt Swap Order Sync
+            </summary>
+            <param name="contract_code"></param>
+            <param name="direction"></param>
+            <param name="offset"></param>
+            <param name="price_type"></param>
+            <param name="lever_rate"></param>
+            <param name="volume"></param>
+            <param name="price"></param>
+            <param name="channel_code">Broker channel_code</param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapGetContractInfoAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get usdt swap contract info async
+            </summary>
+            <param name="contract_code">contract code</param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapGetContractInfo(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get usdt swap contract info sync
+            </summary>
+            <param name="contract_code">contract info</param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapGetMarketDataAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets UsdtSwap contract info async version
+            </summary>
+            <param name="contract_code"> Contract code to get info</param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.UsdtSwapGetmarketData(System.String)">
+            <summary>
+            Gets UsdtSwap contract info sync version
+            </summary>
+            <param name="contract_code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Huobi.Net.HuobiClient.ConstructRequest(System.Uri,System.Net.Http.HttpMethod,System.Collections.Generic.Dictionary{System.String,System.Object},System.Boolean,CryptoExchange39.Net.Objects.PostParameters,CryptoExchange39.Net.Objects.ArrayParametersSerialization,System.Int32)">
             <inheritdoc />
         </member>
         <member name="M:Huobi.Net.HuobiClient.TryParseError(Newtonsoft.Json.Linq.JToken)">
@@ -963,15 +1239,17 @@
             </summary>
         </member>
         <member name="M:Huobi.Net.HuobiClientOptions.#ctor">
-            <summary>
-            Create new client options
-            </summary>
+             <summary>
+             Create new client options
+             </summary>
+            public HuobiClientOptions() : this(null, "https://api.huobi.pro")
         </member>
         <member name="M:Huobi.Net.HuobiClientOptions.#ctor(System.Net.Http.HttpClient)">
-            <summary>
-            Create new client options
-            </summary>
-            <param name="client">HttpClient to use for requests from this client</param>
+             <summary>
+             Create new client options
+             </summary>
+             <param name="client">HttpClient to use for requests from this client</param>
+            public HuobiClientOptions(HttpClient client) : this(client, "https://api.huobi.pro")
         </member>
         <member name="M:Huobi.Net.HuobiClientOptions.#ctor(System.Net.Http.HttpClient,System.String)">
             <summary>
@@ -1277,10 +1555,10 @@
         <member name="M:Huobi.Net.HuobiSocketClient.GetWebsocket(System.String,System.Boolean)">
             <inheritdoc />
         </member>
-        <member name="M:Huobi.Net.HuobiSocketClient.HandleQueryResponse``1(CryptoExchange.Net.Sockets.SocketConnection,System.Object,Newtonsoft.Json.Linq.JToken,CryptoExchange.Net.Objects.CallResult{``0}@)">
+        <member name="M:Huobi.Net.HuobiSocketClient.HandleQueryResponse``1(CryptoExchange39.Net.Sockets.SocketConnection,System.Object,Newtonsoft.Json.Linq.JToken,CryptoExchange39.Net.Objects.CallResult{``0}@)">
             <inheritdoc />
         </member>
-        <member name="M:Huobi.Net.HuobiSocketClient.HandleSubscriptionResponse(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Sockets.SocketSubscription,System.Object,Newtonsoft.Json.Linq.JToken,CryptoExchange.Net.Objects.CallResult{System.Object}@)">
+        <member name="M:Huobi.Net.HuobiSocketClient.HandleSubscriptionResponse(CryptoExchange39.Net.Sockets.SocketConnection,CryptoExchange39.Net.Sockets.SocketSubscription,System.Object,Newtonsoft.Json.Linq.JToken,CryptoExchange39.Net.Objects.CallResult{System.Object}@)">
             <inheritdoc />
         </member>
         <member name="M:Huobi.Net.HuobiSocketClient.MessageMatchesHandler(Newtonsoft.Json.Linq.JToken,System.Object)">
@@ -1289,10 +1567,10 @@
         <member name="M:Huobi.Net.HuobiSocketClient.MessageMatchesHandler(Newtonsoft.Json.Linq.JToken,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Huobi.Net.HuobiSocketClient.AuthenticateSocket(CryptoExchange.Net.Sockets.SocketConnection)">
+        <member name="M:Huobi.Net.HuobiSocketClient.AuthenticateSocket(CryptoExchange39.Net.Sockets.SocketConnection)">
             <inheritdoc />
         </member>
-        <member name="M:Huobi.Net.HuobiSocketClient.Unsubscribe(CryptoExchange.Net.Sockets.SocketConnection,CryptoExchange.Net.Sockets.SocketSubscription)">
+        <member name="M:Huobi.Net.HuobiSocketClient.Unsubscribe(CryptoExchange39.Net.Sockets.SocketConnection,CryptoExchange39.Net.Sockets.SocketSubscription)">
             <inheritdoc />
         </member>
         <member name="T:Huobi.Net.HuobiSymbolOrderBook">
@@ -4406,6 +4684,161 @@
         <member name="P:Huobi.Net.Objects.SocketObjects.V2.HuobiTradeUpdate.OrderStatus">
             <summary>
             Order status
+            </summary>
+        </member>
+        <member name="T:Huobi.Net.Objects.UsdtSwapAccountInfo">
+            <summary>
+            Usdt-M Account info 
+            </summary>
+        </member>
+        <member name="T:Huobi.Net.Objects.UsdtSwapAccountContractDetail">
+            <summary>
+            Contract detail in account info
+            </summary>
+        </member>
+        <member name="T:Huobi.Net.Objects.UsdtSwapMarketData">
+            <summary>
+            Contract data for usdt swap market
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.Id">
+            <summary>
+            kline id,the same as kline timestamp
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.Volume">
+            <summary>
+            Trade Volume(Cont.), from nowtime - 24 hours. Sum of both buy and sell sides
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.Count">
+            <summary>
+            Contract Quantity, from nowtime - 24 hours. Sum of both buy and sell sides
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.Open">
+            <summary>
+            Open
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.High">
+            <summary>
+            High
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.Low">
+            <summary>
+            Low
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.Close">
+            <summary>
+            Close
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.Amount">
+            <summary>
+            Trade Amount(Coin), trade amount(coin)=
+            sum(order quantity of a single order * face value of the coin/order price),
+            from nowtime - 24 hours. Sum of both buy and sell sides
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.Ask">
+            <summary>
+            Sell,[price(Ask price), vol(Ask orders (cont.) )], price in ascending sequence
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.Bid">
+            <summary>
+            Buy,[price(Bid price), vol(Bid orders(Cont.))], Price in descending sequence
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.TradeTurnOver">
+            <summary>
+            Transaction amount, that is, 
+            sum (transaction quantity * contract face value * transaction price),
+            from nowtime - 24 hours. Sum of both buy and sell sides
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapMarketData.TimeStamp">
+            <summary>
+            Timestamp
+            </summary>
+        </member>
+        <member name="T:Huobi.Net.Objects.UsdtSwapOrderInfo">
+            <summary>
+            usdt swap order info
+            </summary>
+        </member>
+        <member name="T:Huobi.Net.Objects.UsdtSwapPlaceOrderDetail">
+            <summary>
+            Swap order place information
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapPlaceOrderDetail.OrderId">
+            <summary>
+            Long order id
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapPlaceOrderDetail.OrderIdStr">
+            <summary>
+            String order id
+            </summary>
+        </member>
+        <member name="T:Huobi.Net.Objects.UsdtSwapPositionInfo">
+            <summary>
+            Usdt swap position info
+            </summary>
+        </member>
+        <member name="T:Huobi.Net.Objects.UsdtSwapSwapInfo">
+            <summary>
+            Swap contract information
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapSwapInfo.Symbol">
+            <summary>
+            Symbol
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapSwapInfo.ContractCode">
+            <summary>
+            Contract Code
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapSwapInfo.ContractSize">
+            <summary>
+            Contract Value (USDT of one contract)
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapSwapInfo.PriceTick">
+            <summary>
+            Minimum Variation of Contract Price
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapSwapInfo.CreateDate">
+            <summary>
+            Listing Date
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapSwapInfo.DeliveryTime">
+            <summary>
+            delivery time（When the contract does not need to be delivered, 
+            the field value is an empty string），millesecond timestamp
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapSwapInfo.ContractStatus">
+            <summary>
+            Contract Status
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapSwapInfo.SettlementDate">
+            <summary>
+            Settlement Date
+            </summary>
+        </member>
+        <member name="P:Huobi.Net.Objects.UsdtSwapSwapInfo.SupportMarginMode">
+            <summary>
+            support margin mode
             </summary>
         </member>
         <member name="T:Huobi.Net.Objects.WithdrawDeposit">

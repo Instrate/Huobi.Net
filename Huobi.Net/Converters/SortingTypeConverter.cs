@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CryptoExchange.Net.Converters;
+using CryptoExchange39.Net.Converters;
 using Huobi.Net.Objects;
 
 namespace Huobi.Net.Converters

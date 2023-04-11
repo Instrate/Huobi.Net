@@ -1,10 +1,10 @@
-﻿using CryptoExchange.Net.Converters;
+﻿using CryptoExchange39.Net.Converters;
 using Huobi.Net.Converters;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CryptoExchange.Net.ExchangeInterfaces;
+using CryptoExchange39.Net.ExchangeInterfaces;
 
 namespace Huobi.Net.Objects
 {

@@ -1,5 +1,5 @@
-﻿using CryptoExchange.Net.Attributes;
-using CryptoExchange.Net.Converters;
+﻿using CryptoExchange39.Net.Attributes;
+using CryptoExchange39.Net.Converters;
 using Newtonsoft.Json;
 using System;
 

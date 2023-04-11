@@ -1,6 +1,6 @@
-﻿using CryptoExchange.Net;
-using CryptoExchange.Net.Authentication;
-using CryptoExchange.Net.Objects;
+﻿using CryptoExchange39.Net;
+using CryptoExchange39.Net.Authentication;
+using CryptoExchange39.Net.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

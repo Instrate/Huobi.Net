@@ -1,6 +1,6 @@
 ﻿using System;
-using CryptoExchange.Net.Converters;
-using CryptoExchange.Net.Interfaces;
+using CryptoExchange39.Net.Converters;
+using CryptoExchange39.Net.Interfaces;
 using Newtonsoft.Json;
 
 namespace Huobi.Net.Objects

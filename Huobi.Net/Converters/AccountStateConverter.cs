@@ -1,4 +1,4 @@
-﻿using CryptoExchange.Net.Converters;
+﻿using CryptoExchange39.Net.Converters;
 using Huobi.Net.Objects;
 using System.Collections.Generic;
 

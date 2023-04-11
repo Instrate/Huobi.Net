@@ -1,7 +1,7 @@
-﻿using CryptoExchange.Net;
-using CryptoExchange.Net.Logging;
-using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.Sockets;
+﻿using CryptoExchange39.Net;
+using CryptoExchange39.Net.Logging;
+using CryptoExchange39.Net.Objects;
+using CryptoExchange39.Net.Sockets;
 using Huobi.Net.Converters;
 using Huobi.Net.Objects;
 using Huobi.Net.Objects.SocketObjects;

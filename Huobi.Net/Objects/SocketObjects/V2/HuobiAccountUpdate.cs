@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CryptoExchange.Net.Attributes;
-using CryptoExchange.Net.Converters;
+using CryptoExchange39.Net.Attributes;
+using CryptoExchange39.Net.Converters;
 using Huobi.Net.Converters;
 using Newtonsoft.Json;
 

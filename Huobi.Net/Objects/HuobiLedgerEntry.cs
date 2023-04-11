@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CryptoExchange.Net.Converters;
+using CryptoExchange39.Net.Converters;
 
 namespace Huobi.Net.Objects
 {

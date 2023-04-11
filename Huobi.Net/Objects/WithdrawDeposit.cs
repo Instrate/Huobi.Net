@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CryptoExchange.Net.Converters;
+using CryptoExchange39.Net.Converters;
 using Huobi.Net.Converters;
 using Huobi.Net.Enums;
 using Newtonsoft.Json;

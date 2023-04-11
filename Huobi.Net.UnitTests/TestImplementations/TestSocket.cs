@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Authentication;
 using System.Threading.Tasks;
-using CryptoExchange.Net.Interfaces;
+using CryptoExchange39.Net.Interfaces;
 using Newtonsoft.Json;
 using WebSocket4Net;
 

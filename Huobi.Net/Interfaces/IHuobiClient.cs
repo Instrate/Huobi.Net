@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Objects;
+using CryptoExchange39.Net.Interfaces;
+using CryptoExchange39.Net.Objects;
 using Huobi.Net.Enums;
 using Huobi.Net.Objects;
 

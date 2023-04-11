@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CryptoExchange.Net.Interfaces;
-using CryptoExchange.Net.Objects;
-using CryptoExchange.Net.Sockets;
+using CryptoExchange39.Net.Interfaces;
+using CryptoExchange39.Net.Objects;
+using CryptoExchange39.Net.Sockets;
 using Huobi.Net.Objects;
 using Huobi.Net.Objects.SocketObjects;
 using Huobi.Net.Objects.SocketObjects.V2;
