@@ -17,6 +17,7 @@ using CryptoExchange39.Net.ExchangeInterfaces;
 using Huobi.Net.Enums;
 using Huobi.Net.Interfaces;
 using Newtonsoft.Json.Linq;
+using Serilog;
 
 namespace Huobi.Net
 {
@@ -72,6 +73,7 @@ namespace Huobi.Net
         private const string QueryWithdrawDepositEndpoint = "query/deposit-withdraw";
         // Swap version
         private const string UsdtSwapPlaceOrderEndpoint = "linear-swap-api/v1/swap_cross_order";
+        //private const string UsdtSwapPlaceOrderInfoEndpoint = "/linear-swap-api/v1/swap_cross_order_info";
         private const string UsdtSwapMarketDataEndpoint = "linear-swap-ex/market/detail/merged?contract_code={}";
         private const string UsdtSwapOrderInfoEndpoint = "linear-swap-api/v1/swap_cross_order_info";
         private const string UsdtSwapOrderCancelEndpoint = "/linear-swap-api/v1/swap_cross_cancel";
@@ -141,19 +143,41 @@ namespace Huobi.Net
         /// Gets the latest ticker for all symbols
         /// </summary>
         /// <returns></returns>
-        public WebCallResult<HuobiSymbolTicks> GetTickers(CancellationToken ct = default) => GetTickersAsync(ct).Result;
+        public WebCallResult<IEnumerable<HuobiMarketSignalTick>> GetTickers(CancellationToken ct = default) => GetTickersAsync(ct).Result;
         /// <summary>
         /// Gets the latest ticker for all symbols
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        public async Task<WebCallResult<HuobiSymbolTicks>> GetTickersAsync(CancellationToken ct = default)
+        public async Task<WebCallResult<IEnumerable<HuobiMarketSignalTick>>> GetTickersAsync(CancellationToken ct = default)
         {
-            var result = await SendHuobiTimestampRequest<IEnumerable<HuobiSymbolTick>>(GetUrl(MarketTickerEndpoint), HttpMethod.Get, ct).ConfigureAwait(false);
-            if (!result)
-                return WebCallResult<HuobiSymbolTicks>.CreateErrorResult(result.ResponseStatusCode, result.ResponseHeaders, result.Error!);
+            //HuobiSymbolTick
+            //GetUrl(MarketTickerEndpoint)
+            string url = "https://api.huobi.pro/market/tickers";
 
-            return new WebCallResult<HuobiSymbolTicks>(result.ResponseStatusCode, result.ResponseHeaders, new HuobiSymbolTicks() { Ticks = result.Data.Item1, Timestamp = result.Data.Item2 }, null);
+            var result = await SendHuobiTimestampRequest<IEnumerable<HuobiMarketSignalTick>>(new Uri(url), HttpMethod.Get, ct).ConfigureAwait(false);
+            if (!result)
+                return WebCallResult<IEnumerable<HuobiMarketSignalTick>>.CreateErrorResult(result.ResponseStatusCode, result.ResponseHeaders, result.Error!);
+
+            return new WebCallResult<IEnumerable<HuobiMarketSignalTick>>(result.ResponseStatusCode, result.ResponseHeaders, result.Data.Item1, null);
+        }
+
+        public async Task<WebCallResult<IEnumerable<HuobiContractIndexSignalTick>>> GetTickersForContractIndexAsync(string symbol, CancellationToken ct = default)
+        {
+            //HuobiSymbolTick
+            //GetUrl(MarketTickerEndpoint)
+            string url = "https://api.hbdm.com/api/v1/contract_index";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "symbol", symbol }
+            };
+
+            var result = await SendHuobiTimestampRequest<IEnumerable<HuobiContractIndexSignalTick>>(new Uri(url), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
+            if (!result)
+                return WebCallResult<IEnumerable<HuobiContractIndexSignalTick>>.CreateErrorResult(result.ResponseStatusCode, result.ResponseHeaders, result.Error!);
+
+            return new WebCallResult<IEnumerable<HuobiContractIndexSignalTick>>(result.ResponseStatusCode, result.ResponseHeaders, result.Data.Item1, null);
         }
 
         /// <summary>
@@ -172,13 +196,15 @@ namespace Huobi.Net
         /// <returns></returns>
         public async Task<WebCallResult<HuobiSymbolTickMerged>> GetMergedTickerAsync(string symbol, CancellationToken ct = default)
         {
-            symbol = symbol.ValidateHuobiSymbol();
+            //symbol = symbol.ValidateHuobiSymbol();
+            string url = "https://api.huobi.pro/market/detail/merged";
             var parameters = new Dictionary<string, object>
             {
                 { "symbol", symbol }
             };
+            //checkResult: false
+            var result = await SendHuobiTimestampRequest<HuobiSymbolTickMerged>(new Uri(url), HttpMethod.Get, ct, parameters).ConfigureAwait(false);
 
-            var result = await SendHuobiTimestampRequest<HuobiSymbolTickMerged>(GetUrl(MarketTickerMergedEndpoint), HttpMethod.Get, ct, parameters, checkResult: false).ConfigureAwait(false);
             if (!result)
                 return WebCallResult<HuobiSymbolTickMerged>.CreateErrorResult(result.ResponseStatusCode, result.ResponseHeaders, result.Error!);
 
@@ -1219,6 +1245,8 @@ namespace Huobi.Net
                 { "contract_code", contract_code }
             };
 
+            
+
             return await SendUsdtSwapRequest<List<UsdtSwapPositionInfo>>(GetUrl(UsdtSwapPositionInfoEndpoint), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
         }
 
@@ -1327,6 +1355,13 @@ namespace Huobi.Net
             parameters.AddOptionalParameter("price", price?.ToString());
 
             return await SendUsdtSwapRequest<UsdtSwapPlaceOrderDetail>(GetUrl(UsdtSwapPlaceOrderEndpoint), HttpMethod.Post, ct, parameters, true).ConfigureAwait(false);
+        }
+        
+
+        // !SBI/TODO://
+        public async Task<WebCallResult<object>> UsdtSwapCancelOrderAsync(CancellationToken ct = default)
+        {
+            return await SendUsdtSwapRequest<object>(GetUrl(UsdtSwapOrderCancelEndpoint), HttpMethod.Post, ct);
         }
 
         /// <summary>
@@ -1607,24 +1642,24 @@ namespace Huobi.Net
 
         public string GetSymbolName(string baseAsset, string quoteAsset) => (baseAsset + quoteAsset).ToLowerInvariant();
 
-        async Task<WebCallResult<IEnumerable<ICommonSymbol>>> IExchangeClient.GetSymbolsAsync()
+        async Task<WebCallResult<IEnumerable<ICommonSymbol>>> GetSymbolsAsync()
         {
             var symbols = await GetSymbolsAsync();
             return WebCallResult<IEnumerable<ICommonSymbol>>.CreateFrom(symbols);
         }
 
-        async Task<WebCallResult<ICommonTicker>> IExchangeClient.GetTickerAsync(string symbol)
+        async Task<WebCallResult<HuobiMarketSignalTick>> GetTickerAsync(string symbol)
         {
             var tickers = await GetTickersAsync();
-            return new WebCallResult<ICommonTicker>(tickers.ResponseStatusCode, tickers.ResponseHeaders,
-                tickers.Data?.Ticks.Where(w => w.Symbol == symbol).Select(t => (ICommonTicker)t).FirstOrDefault(), tickers.Error);
+            return new WebCallResult<HuobiMarketSignalTick>(tickers.ResponseStatusCode, tickers.ResponseHeaders,
+                tickers.Data.Where(w => w.symbol == symbol).First(), tickers.Error);
         }
 
-        async Task<WebCallResult<IEnumerable<ICommonTicker>>> IExchangeClient.GetTickersAsync()
+        async Task<WebCallResult<IEnumerable<HuobiMarketSignalTick>>> GetTickersAsync()
         {
             var tickers = await GetTickersAsync();
-            return new WebCallResult<IEnumerable<ICommonTicker>>(tickers.ResponseStatusCode, tickers.ResponseHeaders,
-                tickers.Data?.Ticks.Select(t => (ICommonTicker)t), tickers.Error);
+            return new WebCallResult<IEnumerable<HuobiMarketSignalTick>>(tickers.ResponseStatusCode, tickers.ResponseHeaders,
+                tickers.Data, tickers.Error);
         }
 
         async Task<WebCallResult<IEnumerable<ICommonKline>>> IExchangeClient.GetKlinesAsync(string symbol, TimeSpan timespan, DateTime? startTime = null, DateTime? endTime = null, int? limit = null)

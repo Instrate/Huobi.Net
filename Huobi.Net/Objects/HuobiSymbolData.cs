@@ -120,4 +120,28 @@ namespace Huobi.Net.Objects
         decimal ICommonTicker.CommonLow => Low ?? 0;
         decimal ICommonTicker.CommonVolume => Volume ?? 0;
     }
+
+    public class HuobiMarketSignalTick
+    {
+        public string symbol { get; set; }
+        public decimal open { get; set; }
+        public decimal high { get; set; }
+        public decimal low { get; set; }
+        public decimal close { get; set; }
+        public decimal amount { get; set; }
+        public decimal vol { get; set; }
+        public decimal count { get; set; }
+        public decimal bid { get; set; }
+        public decimal bidSize { get; set; }
+        public decimal ask { get; set; }
+        public decimal askSize { get; set; }
+    }
+
+    public class HuobiContractIndexSignalTick
+    {
+        public string symbol { get; set; }
+        public decimal index_price { get; set; }
+        public decimal index_ts { get; set; }
+    }
+
 }

@@ -30,14 +30,14 @@ namespace Huobi.Net.Interfaces
         /// Gets the latest ticker for all symbols
         /// </summary>
         /// <returns></returns>
-        WebCallResult<HuobiSymbolTicks> GetTickers(CancellationToken ct = default);
+        WebCallResult<IEnumerable<HuobiMarketSignalTick>> GetTickers(CancellationToken ct = default);
 
         /// <summary>
         /// Gets the latest ticker for all symbols
         /// </summary>
         /// <param name="ct">Cancellation token</param>
         /// <returns></returns>
-        Task<WebCallResult<HuobiSymbolTicks>> GetTickersAsync(CancellationToken ct = default);
+        Task<WebCallResult<IEnumerable<HuobiMarketSignalTick>>> GetTickersAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Gets the ticker, including the best bid / best ask for a symbol

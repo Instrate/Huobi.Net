@@ -22,20 +22,20 @@ namespace CryptoExchange39.Net.ExchangeInterfaces
         /// Get a list of symbols for the exchange
         /// </summary>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<ICommonSymbol>>> GetSymbolsAsync();
+        //Task<WebCallResult<>> GetSymbolsAsync();
 
         /// <summary>
         /// Get a list of tickers for the exchange
         /// </summary>
         /// <returns></returns>
-        Task<WebCallResult<IEnumerable<ICommonTicker>>> GetTickersAsync();
+        //Task<WebCallResult<IEnumerable<ICommonTicker>>> GetTickersAsync();
 
         /// <summary>
         /// Get a ticker for the exchange
         /// </summary>
         /// <param name="symbol">The symbol to get klines for</param>
         /// <returns></returns>
-        Task<WebCallResult<ICommonTicker>> GetTickerAsync(string symbol);
+        //Task<WebCallResult<ICommonTicker>> GetTickerAsync(string symbol);
 
         /// <summary>
         /// Get a list of candles for a given symbol on the exchange
